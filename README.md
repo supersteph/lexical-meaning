@@ -1,3 +1,4 @@
+<title> Word2Vec with Projector Splitting </title>
 <b>Usefulness</b>
 Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means. By using word2vec the information is turned from a sparse vector into a dense one, and this allows the machine to do things with it.
  
