@@ -2,7 +2,11 @@
 Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. In most forms are data, for a standard sized image there could be thousands of bytes of information, but for words this is not the case. In the case of words it is very simple to imagine each word as one paticular number, making the total information that the sentence contains minisculey small compared to the image that we may process to have the same amount of information. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means.
 <br/><br/>
 For and example of how this kind of works with our mind let's say that we said "a cat riding a toy horse" an image like this might pop up in your mind <br/>
+
+
 ![alt text](https://github.com/supersteph/ro_sgns/blob/master/images/Lr7J8ab.jpg "cat on a horse")
+
+
 However, the data obtained by strictly the words in the sentence is 22 bytes, while the image itself is 18 kb and almost 1000 times difference between the information obtained from text and information obtained by image.<br/>
 
 By using word2vec the information is turned from a sparse vector into a dense one, and this allows the machine to do things with it.<br/>
