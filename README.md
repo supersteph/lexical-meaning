@@ -1,10 +1,23 @@
-<title> Word2Vec with Projector Splitting </title>
-<h2>Usefulness</h2>
-Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. In most forms are data, for a standard sized image there could be thousands of bytes of information, but for words this is not the case. In the case of words it is very simple to imagine each word as one paticular number, making the total information that the sentence contains minisculey small compared to the image that we may process to have the same amount of information. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means. By using word2vec the information is turned from a sparse vector into a dense one, and this allows the machine to do things with it.<br/>
+<h2>Usefulness and Applications</h2>
+Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. In most forms are data, for a standard sized image there could be thousands of bytes of information, but for words this is not the case. In the case of words it is very simple to imagine each word as one paticular number, making the total information that the sentence contains minisculey small compared to the image that we may process to have the same amount of information. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means.
+<br/><br/>
+For and example of how this kind of works with our mind let's say that we said "a cat riding a toy horse" an image like this might pop up in your mind <br/>
+![alt text](https://github.com/supersteph/ro_sgns/blob/master/images/Lr7J8ab.jpg "cat on a horse")
+However, the data obtained by strictly the words in the sentence is 22 bytes, while the image itself is 18 kb and almost 1000 times difference between the information obtained from text and information obtained by image.<br/>
+
+By using word2vec the information is turned from a sparse vector into a dense one, and this allows the machine to do things with it.<br/>
  
- <h2>Basic Concept</h2>
+ <h2>Basic Concept of Skip-Gram Model</h2>
  
-Word2vec is essentially a type of unsupervised learning, but it is trained using supervised learning. It starts with the basic idea that words that appear in similar context will have similar meanings. With this in mind we try to to maximize the probability of the context word from the actual word. This model with fake model has two layers a embedding layer and then a output layer with softmax regression. This embedding layer will be size [vocab_size,embedding_size] since the input to this layer will be a one hot encoding, the product will be just a single row of that matrix. So every single row of the matrix becomes a vector, and then u pass the vector through an output layer. Every neuron is dot producted by the embedding of the current context, so this works out. This layer outputs a vector that is size [voca_size] this vector goes through a softmax layer so that each of the outputs become probabilities of a certain word being in the context.<br/>
+Word2vec is essentially a type of unsupervised learning, but it is trained using supervised learning. It starts with the basic idea that words that appear in similar context will have similar meanings. With this in mind we try to to maximize the probability of the context word from the actual word. This model with fake model has two layers a embedding layer and then a output layer with the contexts that implement softmax regression. This embedding layer will be size [vocab_size,embedding_size] since the input to this layer will be a one hot encoding of size [vocab_size], the product will be just a single row of that matrix. So every single row of the matrix becomes a vector, and then u pass the vector through an output layer. 
+<br/>
+
+![alt text](https://github.com/supersteph/ro_sgns/blob/master/images/word2vec_weight_matrix_lookup_table.png "Layers")
+
+
+Every neuron is dot producted by the embedding of the current context, so this works out.
+
+This layer outputs a vector that is size [vocab_size] this vector goes through a softmax layer so that each of the outputs become probabilities of a certain word being in the context.<br/>
  
 <h2>Clever Tricks</h2>
  
