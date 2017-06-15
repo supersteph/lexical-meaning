@@ -1,5 +1,5 @@
 <h2>Usefulness and Applications</h2>
-Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. In most forms are data, for a standard sized image there could be thousands of bytes of information, but for words this is not the case. In the case of words it is very simple to imagine each word as one paticular number, making the total information that the sentence contains minisculey small compared to the image that we may process to have the same amount of information. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means.
+Word2vec has multiple applications, in standard machine learning context it is very tough to retain information from a single word unless more information is given. In most forms are data, for a standard sized image there could be thousands of bytes of information, but for words this is not the case. In the case of words it is very simple to imagine each word as one particular number, making the total information that the sentence contains minisculey small compared to the image that we may process to have the same amount of information. For example from a machine’s perspective when it hears the word “king” it doesn’t know anything about it, but when we hear that word we automatically associate it with royalty and male. Word2vec essentially gives the word more information and gives the machine a sort of “intuition” into what a word means.
 <br/><br/>
 For and example of how this kind of works with our mind let's say that we said "a cat riding a toy horse" an image like this might pop up in your mind <br/>
  
@@ -27,7 +27,7 @@ This layer outputs a vector that is size [vocab_size] this vector goes through a
  
 This basic model works well but there are several downfalls to the basic mode, it is very slow and it takes a lot of time to train. It requires a lot training data and is all-around very hard to do. They do three things that make it slightly better: they treat a couple of words as phrases, they subsample words so that the frequent words may be removed more frequently to keep the data relatively. 
 #Phrasing
-The main idea behind phrasing is that certain sequence of words should be treated as one word, and words of certain caliber could be treated not as phrases but as single words. A prime example of this disparity between the addition of words is the word “Boston” and the word “Globe” these words combined is a newpaper and should be treated like a different object that a globe that comes from boston. The phrasing algorithim is not going to be gone over in this blog but if you want to read on it the link is over [here](http://mccormickml.com/2016/04/12/googles-pretrained-word2vec-model-in-python/)
+The main idea behind phrasing is that certain sequence of words should be treated as one word, and words of certain caliber could be treated not as phrases but as single words. A prime example of this disparity between the addition of words is the word “Boston” and the word “Globe” these words combined is a newspaper and should be treated like a different object that a globe that comes from boston. The phrasing algorithim is not going to be gone over in this blog but if you want to read on it the link is over [here](http://mccormickml.com/2016/04/12/googles-pretrained-word2vec-model-in-python/)
 <br/><br/>
 The adding of phrases turns the already big vocabulary humongous but ultimately allows for the model to have a better understanding of words. 
 #SubSampling
@@ -40,17 +40,19 @@ Negative Sampling is used to generate a random sample which you label the weight
 Previously we explained how we use the context embeddings and the word embedding to create a probability that the context is related to the word. This approach may be kind of limited in a sort of way because you are directly changing the embedding instead of making the objective better. By directly taking the gradient with respect to X instead of taking it with respect to C and W we can try to keep the rank of x low and the rank of c and w relatively low as well. By keeping the rank low it allows the model to peform better.
  
 With this in mind we design the loss function as followed
-()
-This loss function only depends on the product of the two embe 
-The standard grandient descent is shown as followed, but the rank still comes out too high when you just use this method
  
-Use a retrator operator to bring the rank to where we want it to be so that the next step is ready for gradient acsent too
+LOSS = log σ(hw, ci)+#(w)#(c)
++k/|D|*log σ(−hw, ci)*#w*#c
  
-ddings
+The important thing to note about this loss function is that this function is designed as the scalar product of w and c instead of relying on w and c individually.
  
-Explanation of SVD
-Use of SVD to derive the current  W and current C
+This loss function leads us to a gradient like this, note how it is taken with respect to X instead of taken with respect to w and c. It is an important thing to note how to get from X to the W and C embeddings since we are no longer taking the gradient with respect to those two anymore. The way that we do this is by using Singular Value Decomposition on matrix X.
+#SVD
+The basic idea behind Singular Value Decomposition is to take an m*n matrix M and decompose it into three separate matrices, a matrix U, a matrix Σ and a matrix V. The product of U* Σ *V would be equal to M. Each of these Matrices have special properties, if U is multiplied by its inverse it would result in a Identity matrix, Σ is a diagonal matrix of size m*n, and then V is a n*n matrix that is also a unitary matrix. After this the only thing we need to do is to find W and C from the U  Σ V. We define W as U * Σ and C as equal to  Σ*V. The reason why we divvy it up like this is because it is proven to work the best for this case, but varying it could lead to different outputs. But it is shown over here that this way works well.
+<br/>
  
-A good test for the closeness of two vectors is the cosine similarity test,
+<br/>
  
- 
+#Projector Splitting
+The general idea behind gradient descent is that xi+1 = xi + ∇F(X), while this may work for conventional gradient descent it does not work for our case. By adding the gradient, it brings the rank super high, so to bring down the rank we use a retractor with the sole purpose of brining down a rank of a matrix.
+Projector Splitting is based on this idea it uses a combination of SVD and QR decompositions to find xi+1 the benefits of using projector splitting is that you do not need an 
