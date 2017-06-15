@@ -23,17 +23,17 @@ Every neuron is dot producted by the embedding of the current context, so this w
  
 This layer outputs a vector that is size [vocab_size] this vector goes through a softmax layer so that each of the outputs become probabilities of a certain word being in the context.<br/>
  
-<h2>Clever Tricks</h2>
+<h1>Clever Tricks</h1>
  
 This basic model works well but there are several downfalls to the basic mode, it is very slow and it takes a lot of time to train. It requires a lot training data and is all-around very hard to do. They do three things that make it slightly better: they treat a couple of words as phrases, they subsample words so that the frequent words may be removed more frequently to keep the data relatively. 
-# Phrasing
+## Phrasing
 The main idea behind phrasing is that certain sequence of words should be treated as one word, and words of certain caliber could be treated not as phrases but as single words. A prime example of this disparity between the addition of words is the word “Boston” and the word “Globe” these words combined is a newspaper and should be treated like a different object that a globe that comes from boston. The phrasing algorithim is not going to be gone over in this blog but if you want to read on it the link is over [here](http://mccormickml.com/2016/04/12/googles-pretrained-word2vec-model-in-python/)
 <br/><br/>
 The adding of phrases turns the already big vocabulary humongous but ultimately allows for the model to have a better understanding of words. 
-# SubSampling
+## SubSampling
 The main purpose of SubSampling is to remove words from the context that do not provide any meaning to the current word, or appear too frequently. As it turns out, words that don’t provide much meaning and appear too frequently are often the same words. For example, the word “the” the only new information captured by the word “the” is that perhaps the word following is a noun. However “the” appears too many times then is necessary to learn a good vector for the word. So we decide to remove some of these words from the context, which provides us with enough information to embed these words. The probability of removing a particular word from the context is a function with the frequency as a variable. This function removes words that appear more frequently with higher probability.
  
-# Negative Sampling
+## Negative Sampling
 Negative Sampling is used to generate a random sample which you label the weight zero and then it works better and creates more random data. Negative Sampling usually takes 5 words and apply negative weights to these five words. The point of this is to minimize the weights that you update, if you put negative weights on everything other than your current word two things happen, you are updating the entire model every single training iteration which leads to training being extremely slow. You are also doing some work in the opposite way because you might be labelling things negative that may appear in other contexts. For example, just because the word “person” appears in the context of the word “fat” it does not mean that “person” can’t also appear in the context of the word “tall”. On the other hand if you do not provide any other negative weights your training ends up very slow once again, and the model might be able to train things you know aren’t supposed to appear in that context.You find a bunch of words that aren’t your current word and say that you don’t want those to show up at all this means that you don’t have to update all the weights the entire time. Instead of updating everything at one time by only putting some of the things as negative it allows the model to update the output layer much faster, while the embedding layer is unchanged from the previous version. The reason you want to pick the words that come more frequently is logic similar to the subsampling idea, the more often a word appears, the more likely it is to be a filler word and have no correlation to the current word.<br/>
  
 <h1>SGNS</h1>
