@@ -46,7 +46,7 @@ Negative Sampling is used to generate a random sample which you label the weight
 <br/>
 The loss function using Negative Sampling looks like this
 <br/>
-![alt text](https://github.com/supersteph/ro_sgns/blob/master/images/Lr7J8ab.jpg "negative sampling loss equation")
+![alt text](https://github.com/supersteph/ro_sgns/blob/master/images/equation.png "negative sampling loss equation")
 <br/>
 we use this expression to replace ever log() in the loss function for the skip gram model. The first part of this equation can be known as the original part, but then the negative samples are added and then it is like that. The k in the equation stands for the sampling rate, this sampling rate is a function of the frequency of the word.
 <br/>
